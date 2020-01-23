@@ -20,24 +20,24 @@ class ProductCreateWizard(models.TransientModel):
             'uom_id': self.uom.id,
             'uom_po_id': self.uom.id,
         }
-        product = self.env['product.template'].create(new_prod)
+        product = self.env['product.template'].sudo().create(new_prod)
 
         #Create BoM
         new_bom = {
             'product_tmpl_id': product.id,
         }
-        bom = self.env['mrp.bom'].create(new_bom)
+        bom = self.env['mrp.bom'].sudo().create(new_bom)
         bom_line = {
             'product_id': self.base_material.id,
             'product_qty': self.conversion,
             'bom_id': bom.id
         }
-        self.env['mrp.bom.line'].create(bom_line)
+        self.env['mrp.bom.line'].sudo().create(bom_line)
 
         #Add new product to current sale order
         order_line = {
             'order_id': self._context['active_id'],
             'product_id': product.product_variant_id.id,
         }
-        order = self.env['sale.order.line'].create(order_line)
+        order = self.env['sale.order.line'].sudo().create(order_line)
         self.env['sale.order'].browse(self._context['active_id']).order_line += order
