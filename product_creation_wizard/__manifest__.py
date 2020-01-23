@@ -3,12 +3,11 @@
     'name': "product_creation_wizard",
 
     'summary': """
-        Short (1 phrase/line) summary of the module's purpose, used as
-        subtitle on modules listing or apps.openerp.com
+        This module adds the create product button to sale order 
     """,
 
     'description': """
-        Long description of module's purpose
+        Add an easy way to create a product and its bom from sale order
     """,
 
     'author': "TDT Consultants",
