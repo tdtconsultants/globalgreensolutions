@@ -9,6 +9,8 @@
                         <group>
                             <field name="base_material" domain="[('categ_id.name', '=', 'Office Furniture')]"/>
                             <field name="name"/>
+                            <field name="price"/>
+                            <field name="uom"/>
                             <field name="conversion"/>
                         </group>
                     </group>

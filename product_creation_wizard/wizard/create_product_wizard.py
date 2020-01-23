@@ -6,6 +6,8 @@ class ProductCreateWizard(models.TransientModel):
     base_material = fields.Many2one('product.template', "Base Material")
     name = fields.Char("Name")
     conversion = fields.Float("Conversion")
+    uom = fields.Many2one('uom.uom', "Unit of Measure")
+    price = fields.Float("Price")
 
     def create_product(self):
         #New Product Creation
@@ -13,7 +15,10 @@ class ProductCreateWizard(models.TransientModel):
         new_prod = {
             'name': self.name,
             'route_ids': routes.ids,
-            'categ_id': self.base_material.categ_id.id
+            'categ_id': self.base_material.categ_id.id,
+            'list_price': self.price,
+            'uom_id': self.uom.id,
+            'uom_po_id': self.uom.id,
         }
         product = self.env['product.template'].create(new_prod)
 
@@ -27,4 +32,12 @@ class ProductCreateWizard(models.TransientModel):
             'product_qty': self.conversion,
             'bom_id': bom.id
         }
-        line = self.env['mrp.bom.line'].create(bom_line)
+        self.env['mrp.bom.line'].create(bom_line)
+
+        #Add new product to current sale order
+        order_line = {
+            'order_id': self._context['active_id'],
+            'product_id': product.product_variant_id.id,
+        }
+        order = self.env['sale.order.line'].create(order_line)
+        self.env['sale.order'].browse(self._context['active_id']).order_line += order
