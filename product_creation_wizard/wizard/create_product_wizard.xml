@@ -7,7 +7,7 @@
                 <sheet>
                     <group>
                         <group>
-                            <field name="base_material" domain="[('categ_id.name', '=', 'Office Furniture')]"/>
+                            <field name="base_material" domain="[('categ_id.name', '=', 'Raw materials')]"/>
                             <field name="name"/>
                             <field name="price"/>
                             <field name="uom"/>
