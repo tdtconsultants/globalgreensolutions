@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data noupdate="1">
+        <record model="ir.actions.act_window" id="action_create_product">
+            <field name="name">Create Product Wizard Action</field>
+            <field name="res_model">product.create_wizard</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+            <field name="view_id" ref="create_product_wizard_view"/>
+        </record>
+
+        <record id="create_product_button_view" model="ir.ui.view">
+            <field name="name">sale order form button</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='sale_order_template_id']" position="after">
+                    <button name="%(action_create_product)d" string="Create Product" class="oe_highlight" type="action"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>
