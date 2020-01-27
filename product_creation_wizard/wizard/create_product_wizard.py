@@ -3,9 +3,8 @@ from odoo import models, fields, api
 class ProductCreateWizard(models.TransientModel):
     _name = "product.create_wizard"
 
-    base_material = fields.Many2one('product.template', "Base Material")
+    categ_id = fields.Many2one('product.category', "Category")
     name = fields.Char("Name")
-    conversion = fields.Float("Base Material Conversion Ratio")
     uom = fields.Many2one('uom.uom', "Unit of Measure")
     price = fields.Float("Price")
 
@@ -15,7 +14,7 @@ class ProductCreateWizard(models.TransientModel):
         new_prod = {
             'name': self.name,
             'route_ids': routes.ids,
-            'categ_id': self.base_material.categ_id.id,
+            'categ_id': self.categ_id.id,
             'list_price': self.price,
             'uom_id': self.uom.id,
             'uom_po_id': self.uom.id,
@@ -27,12 +26,6 @@ class ProductCreateWizard(models.TransientModel):
             'product_tmpl_id': product.id,
         }
         bom = self.env['mrp.bom'].sudo().create(new_bom)
-        bom_line = {
-            'product_id': self.base_material.id,
-            'product_qty': self.conversion,
-            'bom_id': bom.id
-        }
-        self.env['mrp.bom.line'].sudo().create(bom_line)
 
         #Add new product to current sale order
         order_line = {
