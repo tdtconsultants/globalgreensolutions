@@ -5,7 +5,7 @@ class ProductCreateWizard(models.TransientModel):
 
     base_material = fields.Many2one('product.template', "Base Material")
     name = fields.Char("Name")
-    conversion = fields.Float("Conversion")
+    conversion = fields.Float("Base Material Conversion Ratio")
     uom = fields.Many2one('uom.uom', "Unit of Measure")
     price = fields.Float("Price")
 
