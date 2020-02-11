@@ -8,6 +8,11 @@ class MrpProduction(models.Model):
 
     customer_id = fields.Many2one('res.partner', "Customer")
 
+class MrpWorkorder(models.Model):
+    _inherit = 'mrp.workorder'
+
+    customer_id = fields.Many2one('res.partner', "Customer",store=True,related='production_id.customer_id')
+
 class StockRule(models.Model):
     _inherit = 'stock.rule'
 

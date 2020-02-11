@@ -31,4 +31,46 @@
             </xpath>
         </field>
     </record>
+
+    <record model="ir.ui.view" id="tdt_wos_customer_manufacture">
+      <field name="name">tdt_wos_customer_manufacture</field>
+      <field name="model">mrp.workorder</field>
+      <field name="inherit_id" ref="mrp.mrp_production_workorder_form_view_inherit"></field>
+      <field name="arch" type="xml">
+        <xpath expr="//label[@for='qty_produced']" position="after">
+          <field name="customer_id"/>
+        </xpath>
+      </field>
+    </record>
+
+    <record model="ir.ui.view" id="tdt_wos_customer_manufacture_tree">
+        <field name="name">tdt_workorder_customer_manufacture_tree</field>
+        <field name="model">mrp.workorder</field>
+        <field name="inherit_id" ref="mrp.mrp_production_workorder_tree_view_inherit"></field>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='name']" position="after">
+                <field name="customer_id"/>
+            </xpath>
+        </field>
+    </record>
+    <record model="ir.ui.view" id="tdt_wos_customer_manufacture_search">
+        <field name="name">tdt_workorder_customer_manufacture_search</field>
+        <field name="model">mrp.workorder</field>
+        <field name="inherit_id" ref="mrp.view_mrp_production_workorder_form_view_filter"></field>
+        <field name="arch" type="xml">
+            <xpath expr="//search" position="inside">
+                <field name="customer_id" string="Customer" filter_domain="[('customer_id', 'ilike', self)]"/>
+            </xpath>
+        </field>
+    </record>
+    <record model="ir.ui.view" id="tdt_wos_customer_manufacture_calendar">
+        <field name="name">tdt_workorder_customer_manufacture_calendar</field>
+        <field name="model">mrp.workorder</field>
+        <field name="inherit_id" ref="mrp.workcenter_line_calendar"></field>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='production_id']" position="after">
+                <field name="customer_id"/>
+            </xpath>
+        </field>
+    </record>
 </odoo>
